@@ -78,13 +78,14 @@
             <asp:TextBox ID="txtUsername" runat="server" CssClass="form-control" />
         </div>
         <asp:Button ID="btnLogin" runat="server" Text="Register" OnClick="btnLogin_Click" CssClass="btn-login" Font-Size="Large" />
-        <div class="form-group">
-            <label ID="lblSubmitOtp" runat="server">Otp</label>
+        <div class="form-group" style="margin-top:20px">
+            <asp:Label ID="lblSubmitOtp" runat="server">OTP :</asp:Label>
             <asp:TextBox ID="txtOtp" runat="server" CssClass="form-control" />
         </div>
         <asp:Button ID="btnSubmitOtp" runat="server" Text="Submit OTP" OnClick="btnSubmitOtp_Click" CssClass="btn-login" Font-Size="Large" />
         <asp:Label ID="lblTimer" runat="server" CssClass="form-control" />
         <asp:Button ID="btnResend" runat="server" Text="Resend OTP" OnClick="btnResend_Click" CssClass="btn-resend" Font-Size="Large" Style="display:none;" />
+        <br />
         <asp:Label ID="lblMessage" runat="server" Text=""></asp:Label>
     </div>
 </asp:Content>

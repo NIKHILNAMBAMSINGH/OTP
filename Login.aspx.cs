@@ -58,6 +58,7 @@ public partial class Login : System.Web.UI.Page
         txtOtp.Visible = otpVisible;
         btnSubmitOtp.Visible = submitVisible;
         lblSubmitOtp.Visible = labelVisible;
+       
     }
 
     private int GetResendAttemptCount(string mobileNumber)
