@@ -45,14 +45,14 @@
         var duration = 10000;
         function startTimer() {
             countdown = 10;
-            document.getElementById('<%= lblTimer.ClientID %>').innerText = `Resend OTP in ${countdown} seconds`;
+            document.getElementById('<%= lblTimer.ClientID %>').innerText = 'Resend OTP in ' + countdown + ' seconds';
             document.getElementById('<%= btnResend.ClientID %>').style.display = 'none';
             timer = setInterval(updateTimer, 1000);
         }
 
         function updateTimer() {
             countdown--;
-            document.getElementById('<%= lblTimer.ClientID %>').innerText = `Resend OTP in ${countdown} seconds`;
+            document.getElementById('<%= lblTimer.ClientID %>').innerText = 'Resend OTP in ' + countdown + ' seconds';
             if (countdown <= 0) {
                 clearInterval(timer);
                 document.getElementById('<%= lblTimer.ClientID %>').innerText = '';
