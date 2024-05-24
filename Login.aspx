@@ -41,31 +41,33 @@
             margin-top: 20px;
         }
     </style>
-    <script>
-        var duration = 10000;
-        function startTimer() {
-            countdown = 10;
-            document.getElementById('<%= lblTimer.ClientID %>').innerText = 'Resend OTP in ' + countdown + ' seconds';
-            document.getElementById('<%= btnResend.ClientID %>').style.display = 'none';
-            timer = setInterval(updateTimer, 1000);
-        }
+   <script>
+       var duration = 90000; // Duration in milliseconds (90 seconds)
+       var countdown;
+       var timer;
 
-        function updateTimer() {
-            countdown--;
-            document.getElementById('<%= lblTimer.ClientID %>').innerText = 'Resend OTP in ' + countdown + ' seconds';
-            if (countdown <= 0) {
-                clearInterval(timer);
-                document.getElementById('<%= lblTimer.ClientID %>').innerText = '';
-                document.getElementById('<%= btnResend.ClientID %>').style.display = 'block';
-            }
-        }
-        setTimeout(function() {
-            document.getElementById('<%= btnSubmitOtp.ClientID %>').style.display = 'none';
-            document.getElementById('<%= btnResend.ClientID %>').style.display = 'inline'; // Show Resend button
-        }, duration);
+       function startTimer() {
+           countdown = 90;
+           document.getElementById('<%= lblTimer.ClientID %>').innerText = 'Resend OTP in ' + countdown + ' seconds';
+        document.getElementById('<%= btnResend.ClientID %>').style.display = 'none';
+        timer = setInterval(updateTimer, 1000);
+    }
 
-       
-    </script>
+    function updateTimer() {
+        countdown--;
+        document.getElementById('<%= lblTimer.ClientID %>').innerText = 'Resend OTP in ' + countdown + ' seconds';
+        if (countdown <= 0) {
+            clearInterval(timer);
+            document.getElementById('<%= lblTimer.ClientID %>').innerText = '';
+            document.getElementById('<%= btnResend.ClientID %>').style.display = 'block';
+        }
+    }
+
+    document.getElementById('<%= btnLogin.ClientID %>').addEventListener('click', function() {
+        startTimer();
+    });
+
+</script>
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
