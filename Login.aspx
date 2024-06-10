@@ -41,53 +41,64 @@
             margin-top: 20px;
         }
     </style>
-   <script>
-       var duration = 90000; // Duration in milliseconds (90 seconds)
-       var countdown;
-       var timer;
+    <script type="text/javascript">
+        var countdown;
+        var timer;
 
-       function startTimer() {
-           countdown = 90;
-           document.getElementById('<%= lblTimer.ClientID %>').innerText = 'Resend OTP in ' + countdown + ' seconds';
-        document.getElementById('<%= btnResend.ClientID %>').style.display = 'none';
-        timer = setInterval(updateTimer, 1000);
-    }
+        function startTimer() {
+            countdown = 10;
+            var countdownLabel = document.getElementById('<%= lblTimer.ClientID %>');
+            countdownLabel.innerText = 'Resend OTP in ' + countdown + ' seconds';
+            countdownLabel.style.display = 'block';
 
-    function updateTimer() {
-        countdown--;
-        document.getElementById('<%= lblTimer.ClientID %>').innerText = 'Resend OTP in ' + countdown + ' seconds';
-        if (countdown <= 0) {
-            clearInterval(timer);
-            document.getElementById('<%= lblTimer.ClientID %>').innerText = '';
-            document.getElementById('<%= btnResend.ClientID %>').style.display = 'block';
+            timer = setInterval(function () {
+                countdown--;
+                countdownLabel.innerText = 'Resend OTP in ' + countdown + ' seconds';
+                if (countdown <= 0) {
+                    clearInterval(timer);
+                    countdownLabel.style.display = 'none';
+                    document.getElementById('<%= txtOtp.ClientID %>').style.display = 'none';
+                    document.getElementById('<%= btnSubmitOtp.ClientID %>').style.display = 'none';
+                    document.getElementById('<%= lblSubmitOtp.ClientID %>').style.display = 'none';
+                    document.getElementById('<%= btnResend.ClientID %>').style.display = 'block';
+                }
+            }, 1000);
         }
-    }
 
-    document.getElementById('<%= btnLogin.ClientID %>').addEventListener('click', function() {
-        startTimer();
-    });
-
-</script>
+        function showOtpInput() {
+            document.getElementById('<%= lblSubmitOtp.ClientID %>').style.display = 'block';
+            document.getElementById('<%= txtOtp.ClientID %>').style.display = 'block';
+            document.getElementById('<%= btnSubmitOtp.ClientID %>').style.display = 'block';
+            document.getElementById('<%= lblSubmitOtp.ClientID %>').style.display = 'block';
+        }
+    </script>
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
     <asp:ScriptManager ID="ScriptManager1" runat="server" />
-    
+
     <div class="login-container">
-        <h2 style="text-align:center;">Registration</h2>
         <div class="form-group">
-            <label for="username">Mobile Number:</label>
-            <asp:TextBox ID="txtUsername" runat="server" CssClass="form-control" />
+            <asp:Label ID="lblUsername" runat="server" Text="Enter Mobile No"></asp:Label>
+            <asp:TextBox ID="txtUsername" runat="server"></asp:TextBox>
         </div>
-        <asp:Button ID="btnLogin" runat="server" Text="Register" OnClick="btnLogin_Click" CssClass="btn-login" Font-Size="Large" />
-        <div class="form-group" style="margin-top:20px">
-            <asp:Label ID="lblSubmitOtp" runat="server">OTP :</asp:Label>
-            <asp:TextBox ID="txtOtp" runat="server" CssClass="form-control" />
+        <div class="form-group">
+            <asp:Button ID="btnLogin" runat="server" Text="Send OTP" OnClick="btnLogin_Click" OnClientClick="showOtpInput(); startTimer(); return true;" CssClass="btn-login"/>
         </div>
-        <asp:Button ID="btnSubmitOtp" runat="server" Text="Submit OTP" OnClick="btnSubmitOtp_Click" CssClass="btn-login" Font-Size="Large" />
-        <asp:Label ID="lblTimer" runat="server" CssClass="form-control" />
-        <asp:Button ID="btnResend" runat="server" Text="Resend OTP" OnClick="btnResend_Click" CssClass="btn-resend" Font-Size="Large" Style="display:none;" />
-        <br />
-        <asp:Label ID="lblMessage" runat="server" Text=""></asp:Label>
+        <div class="form-group">
+            <asp:Label ID="lblSubmitOtp" runat="server" Text="Enter OTP" Visible="false"></asp:Label>
+            <asp:TextBox ID="txtOtp" runat="server" Visible="false"></asp:TextBox>
+            <asp:Button ID="btnSubmitOtp" runat="server" Text="Submit OTP" Visible="false" OnClick="btnSubmitOtp_Click" CssClass="btn-login"/>
+        </div>
+        <div class="form-group">
+               <asp:Label ID="lblTimer" runat="server" Text="" ForeColor="Red" Style="display:none;"></asp:Label>
+            <br />
+        </div>
+        <div class="form-group">
+            <asp:Button ID="btnResend" runat="server" Text="Resend OTP" OnClick="btnResend_Click" Style="display:none;" CssClass="btn-resend"/>
+        </div>
+        <div class="form-group">
+            <asp:Label ID="lblMessage" runat="server" Text="" ForeColor="Red"></asp:Label>
+        </div>
     </div>
 </asp:Content>
